@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"net"
 	"os"
 	"os/signal"
 	"strconv"
@@ -90,4 +91,17 @@ func main() {
 		external_port = uint16(port)
 	}
 
+}
+
+func local_ip(server_addr string) net.IP {
+
+	conn, err := net.Dial("udp4", server_addr)
+	if err != nil {
+		log.Println("failed to get local ip")
+		log.Fatalln(err)
+	}
+	defer conn.Close()
+
+	local_addr := conn.LocalAddr().(*net.UDPAddr)
+	return local_addr.IP
 }
