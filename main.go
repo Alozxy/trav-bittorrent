@@ -50,9 +50,7 @@ func main() {
 	set_conf("password", password)
 
 	var external_port uint16 = 0
-	for {
-
-		time.Sleep(time.Duration(get_conf("interval").(int)) * time.Second)
+	for ; ; time.Sleep(time.Duration(get_conf("interval").(int)) * time.Second) {
 
 		bytes, err := os.ReadFile(get_conf("input").(string))
 		if err != nil {
