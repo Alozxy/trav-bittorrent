@@ -50,6 +50,8 @@ func main() {
 	set_conf("username", username)
 	set_conf("password", password)
 
+	set_conf("X-Transmission-Session-Id", "75xsfCvW52BecBVFhpWy6M1jY5oJBYdCz53rbeF6S5FzYVUx")
+
 	var external_port uint16 = 0
 	for ; ; time.Sleep(time.Duration(get_conf("interval").(int)) * time.Second) {
 

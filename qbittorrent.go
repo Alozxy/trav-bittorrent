@@ -16,11 +16,11 @@ func qbittorrent_port(external_port uint16) {
 		Jar: jar,
 	}
 
-	login(client)
-	set_preferences(external_port, client)
+	qbittorrent_login(client)
+	qbittorrent_set_preferences(external_port, client)
 }
 
-func login(client *http.Client) {
+func qbittorrent_login(client *http.Client) {
 
 	addr := conf.get_conf("address").(string)
 	username := conf.get_conf("username").(string)
@@ -48,7 +48,7 @@ func login(client *http.Client) {
 	log.Println("login successfully")
 }
 
-func set_preferences(external_port uint16, client *http.Client) {
+func qbittorrent_set_preferences(external_port uint16, client *http.Client) {
 
 	addr := conf.get_conf("address").(string)
 	schema := "http://" + addr
