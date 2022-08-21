@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/signal"
@@ -55,7 +54,7 @@ func main() {
 
 		time.Sleep(time.Duration(get_conf("interval").(int)) * time.Second)
 
-		bytes, err := ioutil.ReadFile(get_conf("input").(string))
+		bytes, err := os.ReadFile(get_conf("input").(string))
 		if err != nil {
 			log.Println("read file failed:", err)
 			continue
