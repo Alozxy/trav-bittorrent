@@ -32,6 +32,7 @@ func main() {
 	var address string
 	var username string
 	var password string
+	var print_version bool
 	flag.Uint64Var(&local_port_64, "l", 12345, "local port")
 	flag.IntVar(&interval, "i", 10, "interval between two stun request in second")
 	flag.StringVar(&input, "w", "./external.port", "file path of external port")
@@ -39,7 +40,12 @@ func main() {
 	flag.StringVar(&address, "s", "127.0.0.1:8080", "bittorrent client address <ip:port>")
 	flag.StringVar(&username, "u", "admin", "bittorrent client username")
 	flag.StringVar(&password, "p", "123456", "bittorrent client password")
+	flag.BoolVar(&print_version, "v", false, "show current version")
 	flag.Parse()
+	if print_version {
+		println("trav-bittorrent", version)
+		os.Exit(0)
+	}
 	var local_port uint16 = uint16(local_port_64)
 
 	set_conf("local_port", local_port)
