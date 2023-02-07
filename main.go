@@ -58,6 +58,8 @@ func main() {
 
 	set_conf("X-Transmission-Session-Id", "75xsfCvW52BecBVFhpWy6M1jY5oJBYdCz53rbeF6S5FzYVUx")
 
+	set_rule_v4()
+
 	var external_port uint16 = 0
 	for ; ; time.Sleep(time.Duration(get_conf("interval").(int)) * time.Second) {
 
@@ -94,7 +96,7 @@ func main() {
 		}
 
 		log.Println("modifying ipv4 iptables redirect rule...")
-		set_rule_v4(uint16(port))
+		modify_rule_v4(uint16(port))
 
 		external_port = uint16(port)
 	}

@@ -21,7 +21,10 @@ func clear_rule_v4() {
 	}
 }
 
-func set_rule_v4(external_port uint16) {
+func set_rule_v4() {
+}
+
+func modify_rule_v4(external_port uint16) {
 	local_port := get_conf("local_port").(uint16)
 	src_ip := local_ip("1.1.1.1:443")
 
