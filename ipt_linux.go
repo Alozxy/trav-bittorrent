@@ -6,11 +6,15 @@ import (
 	"strconv"
 )
 
-func clear_rule_v4() {
+func clean_rule_v4() {
 
-	if out, err := exec.Command("bash", "-c", "iptables-save --counters | grep -v TRAVERSAL | iptables-restore --counters --table nat").CombinedOutput(); err != nil {
-		log.Fatalln("iptables-save return a non-zero value while clearing ipv4 rules:", string(out))
-	}
+	exec.Command("bash", "-c", `iptables-restore --noflush <<-EOF
+		*nat
+		-D PREROUTING -m addrtype --dst-type LOCAL -j TRAVERSAL
+		-F TRAVERSAL
+		-X TRAVERSAL
+		COMMIT
+		EOF`)
 }
 
 func set_rule_v4() {
