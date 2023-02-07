@@ -19,7 +19,7 @@ func main() {
 		for s := range c {
 			switch s {
 			case syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT:
-				clear_rule_v4()
+				clean_rule_v4()
 				log.Fatalln(s)
 			}
 		}
