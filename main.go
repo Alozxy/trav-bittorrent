@@ -58,6 +58,7 @@ func main() {
 
 	set_conf("X-Transmission-Session-Id", "75xsfCvW52BecBVFhpWy6M1jY5oJBYdCz53rbeF6S5FzYVUx")
 
+	clean_rule_v4()
 	set_rule_v4()
 
 	var external_port uint16 = 0
