@@ -8,13 +8,14 @@ import (
 
 func clean_rule_v4() {
 
-	exec.Command("bash", "-c", `iptables-restore --noflush <<-EOF
+	out, _ := exec.Command("bash", "-c", `iptables-restore --noflush <<-EOF
 		*nat
 		-D PREROUTING -m addrtype --dst-type LOCAL -j TRAVERSAL
 		-F TRAVERSAL
 		-X TRAVERSAL
 		COMMIT
-		EOF`)
+		EOF`).CombinedOutput()
+	log.Println(string(out))
 }
 
 func set_rule_v4() {
