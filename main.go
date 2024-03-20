@@ -20,6 +20,7 @@ func main() {
 			switch s {
 			case syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT:
 				clean_rule_v4()
+				clean_rule_v6()
 				log.Fatalln(s)
 			}
 		}
@@ -59,7 +60,9 @@ func main() {
 	set_conf("X-Transmission-Session-Id", "75xsfCvW52BecBVFhpWy6M1jY5oJBYdCz53rbeF6S5FzYVUx")
 
 	clean_rule_v4()
+	clean_rule_v6()
 	set_rule_v4()
+	set_rule_v6()
 
 	var external_port uint16 = 0
 	for ; ; time.Sleep(time.Duration(get_conf("interval").(int)) * time.Second) {
@@ -98,6 +101,7 @@ func main() {
 
 		log.Println("modifying ipv4 iptables redirect rule...")
 		modify_rule_v4(uint16(port))
+		modify_rule_v6(uint16(port))
 
 		external_port = uint16(port)
 	}

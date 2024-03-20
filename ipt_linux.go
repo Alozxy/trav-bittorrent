@@ -17,6 +17,17 @@ func clean_rule_v4() {
 		EOF`).Run()
 }
 
+func clean_rule_v6() {
+
+	exec.Command("bash", "-c", `ip6tables-restore --noflush <<-EOF
+		*filter
+		-D INPUT -m addrtype --dst-type LOCAL -j TRAVERSAL
+		-F TRAVERSAL
+		-X TRAVERSAL
+		COMMIT
+		EOF`).Run()
+}
+
 func set_rule_v4() {
 
 	if out, err := exec.Command("bash", "-c", `iptables-restore --noflush <<-EOF
@@ -26,6 +37,18 @@ func set_rule_v4() {
 		COMMIT
 		EOF`).CombinedOutput(); err != nil {
 		log.Fatalln("iptablesi-restore return a non-zero value while setting ipv4 rules:", string(out))
+	}
+}
+
+func set_rule_v6() {
+
+	if out, err := exec.Command("bash", "-c", `ip6tables-restore --noflush <<-EOF
+		*filter
+		:TRAVERSAL -
+		-A INPUT -m addrtype --dst-type LOCAL -j TRAVERSAL
+		COMMIT
+		EOF`).CombinedOutput(); err != nil {
+		log.Fatalln("ip6tablesi-restore return a non-zero value while setting ipv6 rules:", string(out))
 	}
 }
 
@@ -41,5 +64,18 @@ func modify_rule_v4(external_port uint16) {
 		COMMIT
 		EOF`).CombinedOutput(); err != nil {
 		log.Fatalln("iptablesi-restore return a non-zero value while modifying ipv4 rules:", string(out))
+	}
+}
+
+func modify_rule_v6(external_port uint16) {
+
+	if out, err := exec.Command("bash", "-c", `ip6tables-restore --noflush <<-EOF
+		*filter
+		-F TRAVERSAL
+		-I TRAVERSAL -p tcp -m tcp --dport `+strconv.FormatUint(uint64(external_port), 10)+` -j ACCEPT
+		-I TRAVERSAL -p udp -m udp --dport `+strconv.FormatUint(uint64(external_port), 10)+` -j ACCEPT
+		COMMIT
+		EOF`).CombinedOutput(); err != nil {
+		log.Fatalln("ip6tablesi-restore return a non-zero value while modifying ipv6 rules:", string(out))
 	}
 }
