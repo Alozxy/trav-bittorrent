@@ -101,6 +101,7 @@ func main() {
 
 		log.Println("modifying ipv4 iptables redirect rule...")
 		modify_rule_v4(uint16(port))
+		log.Println("modifying ipv6 iptables redirect rule...")
 		modify_rule_v6(uint16(port))
 
 		external_port = uint16(port)
