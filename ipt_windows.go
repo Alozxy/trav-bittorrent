@@ -5,7 +5,7 @@ import (
 	"os/exec"
 	"strconv"
 
-	"github.com/alozxy/udp-forward"
+	forward "github.com/alozxy/udp-forward"
 )
 
 var forwarder *forward.Forwarder = nil
@@ -21,7 +21,13 @@ func clean_rule_v4() {
 	}
 }
 
+func clean_rule_v6() {
+}
+
 func set_rule_v4() {
+}
+
+func set_rule_v6() {
 }
 
 func modify_rule_v4(external_port uint16) {
@@ -38,4 +44,7 @@ func modify_rule_v4(external_port uint16) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func modify_rule_v6(external_port uint16) {
 }
